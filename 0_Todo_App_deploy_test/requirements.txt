@@ -1,4 +1,4 @@
 Flask
 gunicorn
-# If you use a database, add the driver here, e.g., for SQLite (built-in) or 
-# if using PostgreSQL, add: psycopg2-binary
+Flask-SQLAlchemy==3.1.1
+
