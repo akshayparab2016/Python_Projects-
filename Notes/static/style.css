@@ -1,0 +1,22 @@
+from flask import Flask, render_template
+
+# Create a Flask app
+app = Flask(__name__)
+
+# Define a route (URL)
+@app.route("/")
+def home():
+    return render_template('index.html', name="Akshay")
+
+@app.route("/about")
+def about():
+    return "This is the about page."
+
+@app.route("/contact")
+def contact():
+    return "Contact Page"
+
+# Run the app
+if __name__ == "__main__":
+    app.run(debug=True)
+    

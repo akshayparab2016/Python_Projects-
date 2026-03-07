@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block content %}
+
+<h2 class="text-white mb-4">Your Notes</h2>
+
+<div class="row">
+  {% for note in notes %}
+
+  <div class="col-md-4 mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h5>{{ note.title }}</h5>
+
+        <p>{{ note.content }}</p>
+
+        <a
+          class="btn btn-warning btn-sm"
+          href="{{ url_for('edit', id=note.id) }}"
+        >
+          Edit
+        </a>
+
+        <a
+          class="btn btn-danger btn-sm"
+          href="{{ url_for('delete', id=note.id) }}"
+        >
+          Delete
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+</div>
+
+{% endblock %}

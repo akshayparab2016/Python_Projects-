@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Notes App</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-dark">
+    <nav class="navbar navbar-dark bg-black">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('home') }}">📝 Notes App</a>
+
+        <div>
+          {% if session.get("user_id") %}
+
+          <a
+            class="btn btn-outline-light btn-sm"
+            href="{{ url_for('dashboard') }}"
+            >Dashboard</a
+          >
+          <a
+            class="btn btn-outline-light btn-sm"
+            href="{{ url_for('create_note') }}"
+            >New Note</a
+          >
+          <a class="btn btn-danger btn-sm" href="{{ url_for('logout') }}"
+            >Logout</a
+          >
+
+          {% else %}
+
+          <a class="btn btn-outline-light btn-sm" href="{{ url_for('login') }}"
+            >Login</a
+          >
+          <a
+            class="btn btn-outline-light btn-sm"
+            href="{{ url_for('register') }}"
+            >Register</a
+          >
+
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-4">
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for
+      message in messages %}
+
+      <div class="alert alert-info">{{ message }}</div>
+
+      {% endfor %} {% endif %} {% endwith %} {% block content %} {% endblock %}
+    </div>
+  </body>
+
+  <script>
+    setTimeout(function () {
+      let alerts = document.querySelectorAll(".alert");
+      alerts.forEach(function (alert) {
+        alert.style.display = "none";
+      });
+    }, 3000);
+  </script>
+</html>
