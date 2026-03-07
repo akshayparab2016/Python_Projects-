@@ -1,0 +1,203 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>URL Shortener</title>
+
+    ```
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background: #7a2828;
+      }
+
+      .main-card {
+        margin-top: 20px;
+        border-radius: 12px;
+      }
+
+      .table-container {
+        margin-top: 40px;
+      }
+
+      .short-url {
+        font-weight: 500;
+        color: #0d6efd;
+      }
+    </style>
+    ```
+  </head>
+
+  <body>
+    <div class="container">
+      ```
+      <!-- Title -->
+      <div class="text-center" style="color: white">
+        <h2 class="fw-bold">🔗 URL Shortener</h2>
+        <p style="color: white">Shorten your long links quickly</p>
+      </div>
+
+      <!-- Card -->
+      <div class="row justify-content-center">
+        <div class="col-md-7">
+          <div class="card shadow main-card">
+            <div class="card-body p-4">
+              <!-- Form -->
+              <form method="POST">
+                <div class="mb-3">
+                  <label class="form-label">Enter your long URL</label>
+                  <input
+                    type="url"
+                    name="original_url"
+                    class="form-control form-control-md"
+                    placeholder="https://example.com/very-long-url"
+                    required
+                  />
+                </div>
+
+                <div class="d-grid">
+                  <button class="btn btn-primary btn-md">Shorten URL</button>
+                </div>
+              </form>
+              <br />
+              <!-- Flash messages -->
+              {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %} {% for category, message in messages %}
+              <div
+                class="alert alert-{{category}} alert-dismissible fade show flash-message"
+              >
+                {{ message }}
+                <button class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+              {% endfor %} {% endif %} {% endwith %}
+
+              <!-- Result -->
+              {% if short_url %}
+              <div class="alert alert-success mt-4">
+                <strong>Your Short URL:</strong>
+                <!-- Close Button -->
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                  style="float: right"
+                ></button>
+                <br />
+                <div class="d-flex mt-2">
+                  <input
+                    type="text"
+                    class="form-control me-2"
+                    value="{{ short_url }}"
+                    id="shortUrl"
+                    readonly
+                  />
+
+                  <button class="btn btn-outline-primary" onclick="copyURL()">
+                    Copy
+                  </button>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="table-container">
+        <div>
+          <div class="card shadow-sm">
+            <div class="card-header bg-white">
+              <h5 class="mb-1">Previously Shortened URLs</h5>
+            </div>
+
+            <div class="card-body p-0">
+              <table class="table table-striped table-hover mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>ID</th>
+                    <th>Original URL</th>
+                    <th>Short URL</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {% for url in urls %}
+                  <tr>
+                    <td>{{ loop.index }}</td>
+
+                    <td
+                      style="
+                        max-width: 350px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                      "
+                    >
+                      {{ url.original_url }}
+                    </td>
+
+                    <td>
+                      <a
+                        href="/{{url.short_url}}"
+                        class="short-url"
+                        target="_blank"
+                      >
+                        {{ request.host_url }}{{ url.short_url }}
+                      </a>
+                    </td>
+
+                    <td>
+                      <form
+                        action="/delete/{{url.id}}"
+                        method="POST"
+                        style="display: inline"
+                      >
+                        <button
+                          class="btn btn-sm btn-danger"
+                          onclick="return confirm('Delete this URL?');"
+                        >
+                          Delete
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      ```
+    </div>
+
+    <script>
+      function copyURL() {
+        var copyText = document.getElementById("shortUrl");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(copyText.value);
+        alert("Copied to clipboard!");
+      }
+
+      setTimeout(function () {
+        let alerts = document.querySelectorAll(".flash-message");
+        alerts.forEach(function (alert) {
+          let bsAlert = new bootstrap.Alert(alert);
+          bsAlert.close();
+        });
+      }, 3000);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
