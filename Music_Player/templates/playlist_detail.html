@@ -1,0 +1,102 @@
+{% extends "base.html" %} {% block content %}
+
+<h2>{{ playlist.name }}</h2>
+
+<h5>Tracks already in this Playlist</h5>
+<div class="row">
+  {% for track in playlist_tracks %}
+  <div class="col-md-3 mb-4">
+    <div class="card h-100">
+      <img
+        src="{{ track.track_artwork }}"
+        class="card-img-top"
+        style="height: 140px; object-fit: cover"
+        onerror="this.src = '/static/noimage.jpg'"
+      />
+
+      <div class="card-body">
+        <h6 class="card-title text-truncate" style="color: white">
+          {{ track.track_title }}
+        </h6>
+        <p class="card-text text-truncate" style="color: white">
+          {{ track.track_artist }}
+        </p>
+        <div class="mt-auto">
+          <audio controls style="width: 100%">
+            <source src="{{ track.track_url }}" type="audio/mpeg" />
+          </audio>
+          <form
+            method="POST"
+            action="{{ url_for('remove_track', track_id=track.id) }}"
+          >
+            <button class="btn btn-danger btn-sm w-100">
+              - Remove song from playlist
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<hr />
+<!-- Search Songs -->
+<form method="POST" class="my-4">
+  <div class="input-group">
+    <input
+      type="text"
+      name="query"
+      class="form-control"
+      placeholder="Search songs to add in your playlist..."
+      value="{{ query or '' }}"
+    />
+    &nbsp;&nbsp;
+    <button type="submit" class="btn btn-primary">Search</button>
+  </div>
+</form>
+
+<h4>
+  {% if query %} Search results for '{{ query }}' {% else %} Trending Tracks 🔥
+  {% endif %}
+</h4>
+<div class="row">
+  {% for track in api_tracks %}
+  <div class="col-md-3 mb-4">
+    <div class="card h-100 track-card">
+      <img
+        src="{{ track.artwork }}"
+        class="card-img-top"
+        style="height: 150px; object-fit: cover"
+        onerror="this.src = '/static/noimage.jpg'"
+      />
+      <div class="card-body d-flex flex-column">
+        <h6 class="card-title text-truncate">{{ track.title }}</h6>
+        <p class="card-text text-truncate">{{ track.artist }}</p>
+
+        <!-- Add to Playlist Button -->
+        <form
+          method="POST"
+          action="{{ url_for('add_track', playlist_id=playlist.id) }}"
+          class="mt-2"
+        >
+          <input type="hidden" name="track_id" value="{{ track.id }}" />
+          <input type="hidden" name="track_title" value="{{ track.title }}" />
+          <input type="hidden" name="track_artist" value="{{ track.artist }}" />
+          <input
+            type="hidden"
+            name="track_artwork"
+            value="{{ track.artwork }}"
+          />
+          <input type="hidden" name="track_url" value="{{ track.url }}" />
+          <button type="submit" class="btn btn-success w-100">
+            + Add to Playlist
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

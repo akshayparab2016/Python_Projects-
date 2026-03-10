@@ -1,0 +1,52 @@
+{% extends "base.html" %} {% block content %}
+
+<form method="POST" action="{{ url_for('search') }}" class="my-4">
+  <div class="input-group">
+    <input
+      type="text"
+      name="query"
+      placeholder="Search songs..."
+      class="form-control"
+      value="{{ query or '' }}"
+      required
+    />
+    &nbsp; &nbsp;
+    <button class="btn btn-primary" type="submit">Search</button>
+  </div>
+</form>
+
+<h4>
+  {% if query %} Search results for '{{ query }}' {% else %} Trending Tracks🔥
+  {% endif %}
+</h4>
+<p />
+<div class="row">
+  {% for track in tracks %}
+  <div class="col-md-3 mb-4">
+    <div class="card h-100 track-card">
+      <!-- Image -->
+      <img
+        src="{{ track.artwork }}"
+        class="card-img-top"
+        style="height: 200px; object-fit: cover"
+        onerror="this.src = '/static/noimage.jpg'"
+      />
+      <div class="card-body d-flex flex-column">
+        <h6 class="card-title text-truncate">
+          <strong>{{ track.title.capitalize() }}</strong>
+        </h6>
+        <p class="card-text text-truncate">{{ track.artist.capitalize() }}</p>
+
+        <!-- Music player -->
+        <div class="mt-auto">
+          <audio controls style="width: 100%">
+            <source src="{{ track.url }}" type="audio/mpeg" />
+          </audio>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
