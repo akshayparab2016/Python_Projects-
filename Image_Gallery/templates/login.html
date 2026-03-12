@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% block content %}
+
+<h3 style="color: white">Login</h3>
+
+<form method="POST">
+  <input class="form-control mb-3" name="username" required />
+
+  <input class="form-control mb-3" name="password" type="password" required />
+
+  <button class="btn btn-primary">Login</button>
+  <a href="/register" class="btn btn-success">Register</a>
+</form>
+<br /><br />
+{% endblock %}

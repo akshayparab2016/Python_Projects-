@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block content %}
+
+<a class="btn btn-outline-warning" href="/">← Browse for more images</a>
+<br /><br />
+<h3 style="color: white; font-family: calibri; font-size: 28px">
+  My Saved Images
+</h3>
+
+<div class="gallery-masonry">
+  {% for img in images %}
+
+  <div class="gallery-item">
+    <img src="{{img.url}}" />
+
+    <div class="gallery-overlay">
+      <a href="{{img.url}}" download class="btn btn-dark btn-sm">
+        <i class="bi bi-download"></i>
+      </a>
+
+      <a href="/delete/{{img.id}}" class="btn btn-danger btn-sm">
+        <i class="bi bi-trash"></i>
+      </a>
+    </div>
+  </div>
+
+  {% endfor %}
+</div>
+<br /><br />
+{% endblock %}
