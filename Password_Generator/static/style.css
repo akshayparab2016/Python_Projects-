@@ -1,0 +1,130 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", sans-serif;
+  padding: 20px;
+}
+
+.main-container {
+  width: 100%;
+  max-width: 1100px;
+}
+
+.password-card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transition: 0.3s ease;
+}
+
+.password-card:hover {
+  transform: translateY(-5px);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.subtitle {
+  color: #666;
+  margin-top: 8px;
+}
+
+.custom-input {
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.custom-input:focus {
+  border-color: #764ba2;
+  box-shadow: 0 0 8px rgba(118, 75, 162, 0.3);
+}
+
+.options-section {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.form-check {
+  margin-bottom: 10px;
+}
+
+.form-check:last-child {
+  margin-bottom: 0;
+}
+
+.form-check-input {
+  cursor: pointer;
+  width: 1.3rem;
+  height: 1.3rem;
+  border: 2px solid #764ba2;
+  margin-top: 0.15rem;
+}
+
+.form-check-input:checked {
+  background-color: #764ba2;
+}
+
+.form-check-label {
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.generate-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  color: white;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.generate-btn:hover {
+  transform: scale(1.02);
+  background: linear-gradient(135deg, #5a6de0, #6b3f98);
+}
+
+.password-box {
+  background: #f3f4f6;
+  border: 2px dashed #764ba2;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #198754;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 576px) {
+  .password-card {
+    padding: 25px;
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .password-box {
+    font-size: 18px;
+  }
+}
