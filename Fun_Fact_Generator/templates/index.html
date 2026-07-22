@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fun Fact Generator</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="fact-card">
+        <h1 class="title">💡Random Fun Facts</h1>
+
+        <p class="subtitle">A spark of curiosity in every click.</p>
+
+        <div class="fact-box {% if is_error %}error-box{% endif %}">
+          {% if is_error %}
+          <span class="quote">⚠️</span>
+          {% else %}
+          <span class="quote">💭</span>
+          {% endif %} {{ fact }}
+        </div>
+
+        <a href="/" class="generate-btn">✨ Show Me Another Fact </a>
+      </div>
+    </div>
+  </body>
+</html>
